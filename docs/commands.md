@@ -21,3 +21,5 @@ https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/issues/1125
 https://imagemagick.org/script/montage.php
 
 https://stackoverflow.com/questions/20737061/merge-images-side-by-side-horizontally
+
+https://gist.github.com/tayvano/6e2d456a9897f55025e25035478a3a50
