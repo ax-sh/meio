@@ -1,6 +1,5 @@
 import { GluegunCommand } from 'gluegun'
 import { type ExtendedGluegunToolbox } from '../../types'
-import { breakVideoToSegmentsCommand } from '../../libs/video-utils'
 
 const command: GluegunCommand<ExtendedGluegunToolbox> = {
   name: 'boomerang',
@@ -12,8 +11,8 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
     console.log('file size', ffmpegCMD.videoSize, 'mb')
     const outputPath = filesystem.dir('output')
     const cmd = ffmpegCMD.makeChunks(30).outputPath(outputPath)
-    console.log(cmd._getArguments())
-    // cmd.run()
+    // console.log(cmd._getArguments())
+    cmd.run()
 
     // ffmpeg -pattern_type glob -i "*.jpg" -filter_complex "[0]reverse[r];[0][r]concat,loop=5:250,setpts=N/25/TB,scale=1920:1080" -vcodec mpeg4 -q:v 1 output_looped.mp4
     // const { raw, argv, ...args } = parameters

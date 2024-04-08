@@ -21,21 +21,3 @@ export function FFMPEGLogger(ffmpegCMD: FfmpegCommand) {
       console.trace('onExit()')
     })
 }
-
-export function breakVideoToSegmentsCommand(
-  ffmpegCMD: FfmpegCommand,
-  segmentTimeInSec: number,
-  outputPath: FSJetpack,
-) {
-  const fileNamePrefix = 'video_'
-  const path = outputPath.path(`${fileNamePrefix}%04d.mp4`)
-  // `-segment_list ${outputPath}/tmp.ffcat`,
-  const command = ffmpegCMD
-    .outputOption('-map 0')
-    .outputOption('-c copy')
-    .outputOption('-f segment')
-    .outputOption(`-segment_time ${segmentTimeInSec}`)
-    .outputOption('-y')
-    .output(path)
-  return command
-}
