@@ -1,5 +1,6 @@
 import { GluegunCommand } from 'gluegun'
 import { ExtendedGluegunToolbox, KnownError } from '../../types'
+import { breakVideoToSegmentsCommand } from '../../libs/video-utils'
 
 const command: GluegunCommand<ExtendedGluegunToolbox> = {
   name: 'boomerang',
@@ -13,7 +14,12 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
     if (noFile) throw new KnownError('Not a video file')
     const stat = filesystem.inspect(videoPath, { absolutePath: true })
     const vid = ffmpeg(videoPath)
-    console.log(stat, vid)
+    const outputPath = filesystem.dir(
+      filesystem.path(filesystem.cwd(), 'output'),
+    )
+    breakVideoToSegmentsCommand(vid, 30, outputPath).run()
+
+    console.log(stat, outputPath, filesystem.cwd())
 
     // ffmpeg -pattern_type glob -i "*.jpg" -filter_complex "[0]reverse[r];[0][r]concat,loop=5:250,setpts=N/25/TB,scale=1920:1080" -vcodec mpeg4 -q:v 1 output_looped.mp4
     // const { raw, argv, ...args } = parameters

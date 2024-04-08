@@ -11,6 +11,9 @@ dependencies:
   fluent-ffmpeg:
     specifier: ^2.1.2
     version: 2.1.2
+  fs-jetpack:
+    specifier: ^5.1.0
+    version: 5.1.0
   gluegun:
     specifier: latest
     version: 5.1.6
@@ -1825,6 +1828,12 @@ packages:
     dependencies:
       minimatch: 3.1.2
       rimraf: 2.7.1
+    dev: false
+
+  /fs-jetpack@5.1.0:
+    resolution: {integrity: sha512-Xn4fDhLydXkuzepZVsr02jakLlmoARPy+YWIclo4kh0GyNGUHnTqeH/w/qIsVn50dFxtp8otPL2t/HcPJBbxUA==}
+    dependencies:
+      minimatch: 5.1.6
     dev: false
 
   /fs.realpath@1.0.0:

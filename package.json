@@ -30,6 +30,7 @@
   "dependencies": {
     "@types/fluent-ffmpeg": "^2.1.24",
     "fluent-ffmpeg": "^2.1.2",
+    "fs-jetpack": "^5.1.0",
     "gluegun": "latest"
   },
   "devDependencies": {
