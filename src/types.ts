@@ -1,1 +1,3 @@
-// export types
+export class KnownError extends Error {
+
+}
