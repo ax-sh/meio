@@ -19,3 +19,5 @@ https://github.com/gsiou/video-reverse-script/blob/master/reverse.sh
 https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/issues/1125
 
 https://imagemagick.org/script/montage.php
+
+https://stackoverflow.com/questions/20737061/merge-images-side-by-side-horizontally
