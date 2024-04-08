@@ -11,3 +11,5 @@ https://video.stackexchange.com/questions/tagged/ffmpeg?tab=votes&page=2&pagesiz
 https://video.stackexchange.com/questions/17738/how-to-use-ffmpeg-command-for-reverse-video
 
 https://stackoverflow.com/questions/76049932/how-do-i-reverse-a-video-in-ffmpeg
+
+https://github.com/gsiou/video-reverse-script/blob/master/reverse.sh
