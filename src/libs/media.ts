@@ -44,10 +44,11 @@ export class Video {
   frames(outputFolder?: FSJetpack) {
     const outputPath = outputFolder
       ? outputFolder
-      : this.getRelativeFolder('frames')
+      : this.getRelativeFolder(`${this.file.name}-frames`)
 
     const path = outputPath.path('frame-%d.png')
-    return this.cmd.outputOption(`-c:v png ${path}`)
+
+    return this.cmd.outputOption(`-c:v png`).output(path)
   }
 }
 

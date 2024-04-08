@@ -6,7 +6,12 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
   alias: ['frame'],
   run: async (toolbox) => {
     const cmd = toolbox.media.video(toolbox.parameters.first)
-    cmd.frames()
+    try {
+      cmd.frames()
+      // .run()
+    } catch (e) {
+      console.log(e)
+    }
   },
 }
 
