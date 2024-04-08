@@ -8,6 +8,7 @@ module.exports = async (toolbox: ExtendedGluegunToolbox) => {
   }
 
   toolbox.ffmpeg = await import('fluent-ffmpeg')
+  toolbox.media = await import('../libs/media')
 
   // enable this if you want to read configuration in from
   // the current folder's package.json (in a "meio" property),
