@@ -1,16 +1,14 @@
 import * as ffmpeg from 'fluent-ffmpeg'
 import * as jetpack from 'fs-jetpack'
+import * as path from 'path'
 import { KnownError } from '../types'
 import { FSJetpack, InspectResult } from 'fs-jetpack/types'
-import * as path from 'path'
-import { ParsedPath } from 'path'
 
 export class Video {
-  private readonly videoPath: string
   public readonly videoSize: number
   private readonly videoFolder: string
   public readonly cmd: ffmpeg.FfmpegCommand
-  public readonly file: ParsedPath
+  public readonly file: path.ParsedPath
   constructor(video: InspectResult) {
     this.videoFolder = jetpack.path(video.absolutePath, '..')
     this.videoSize = +(video.size / 1024 ** 2).toFixed(2)
@@ -28,8 +26,8 @@ export class Video {
           ? outputPath
           : this.getRelativeFolder('segments')
         const filePattern = `${fileNamePrefix}%04d.mp4`
-        const videoList = output.path('broken-video-chunks-list.txt')
-        return this.cmd
+        const videoList = output.path('broken-video-chunks-list.ffcat')
+        const cmd = this.cmd
           .outputOption('-map 0')
           .outputOption('-c copy')
           .outputOption('-f segment')
@@ -37,8 +35,20 @@ export class Video {
           .outputOption(`-segment_time ${segmentTimeInSec}`)
           .outputOption('-y')
           .output(output.path(filePattern))
+        return { cmd, videoList }
       },
     }
+  }
+
+  async videoChunks(outputPath?: FSJetpack) {
+    return new Promise<string>((resolve, reject) => {
+      const { cmd, videoList } = this.makeChunks(20).outputPath(outputPath)
+
+      cmd
+        .on('end', () => resolve(videoList))
+        .on('error', () => reject('error'))
+        .run()
+    })
   }
 
   frames(outputFolder?: FSJetpack) {

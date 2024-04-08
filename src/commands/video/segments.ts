@@ -10,8 +10,8 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
     const ffmpegCMD = media.video(videoPath)
     console.log('File size', ffmpegCMD.videoSize, 'mb')
     const outputPath = filesystem.dir('output')
-    const cmd = ffmpegCMD.makeChunks(30).outputPath(outputPath)
-    cmd.run()
+    const result = await ffmpegCMD.videoChunks(outputPath)
+    console.log(result)
   },
 }
 
