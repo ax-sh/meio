@@ -24,7 +24,7 @@ export function FFMPEGLogger(ffmpegCMD: FfmpegCommand) {
 
 export function breakVideoToSegmentsCommand(
   ffmpegCMD: FfmpegCommand,
-  segments: number,
+  segmentTimeInSec: number,
   outputPath: FSJetpack,
 ) {
   const fileNamePrefix = 'video_'
@@ -34,7 +34,7 @@ export function breakVideoToSegmentsCommand(
     .outputOption('-map 0')
     .outputOption('-c copy')
     .outputOption('-f segment')
-    .outputOption(`-segment_time ${segments}`)
+    .outputOption(`-segment_time ${segmentTimeInSec}`)
     .outputOption('-y')
     .output(path)
   return command

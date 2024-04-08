@@ -14,9 +14,7 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
     if (noFile) throw new KnownError('Not a video file')
     const stat = filesystem.inspect(videoPath, { absolutePath: true })
     const vid = ffmpeg(videoPath)
-    const outputPath = filesystem.dir(
-      filesystem.path(filesystem.cwd(), 'output'),
-    )
+    const outputPath = filesystem.dir('output')
     breakVideoToSegmentsCommand(vid, 30, outputPath).run()
 
     console.log(stat, outputPath, filesystem.cwd())

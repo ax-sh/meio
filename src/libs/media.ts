@@ -7,12 +7,12 @@ export class Video {
     this.videoPath = videoPath
     this.cmd = ffmpeg(this.videoPath)
   }
-  public makeChunks(outputPath: string, segments: number) {
+  public makeChunks(outputPath: string, segmentTimeInSec: number) {
     return this.cmd
       .outputOption('-map 0')
       .outputOption('-c copy')
       .outputOption('-f segment')
-      .outputOption(`-segment_time ${segments}`)
+      .outputOption(`-segment_time ${segmentTimeInSec}`)
       .outputOption('-y')
       .output(outputPath)
   }
