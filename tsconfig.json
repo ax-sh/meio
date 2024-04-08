@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["vitest/globals"],
     "allowSyntheticDefaultImports": false,
     "experimentalDecorators": true,
     "lib": [
