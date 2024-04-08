@@ -28,6 +28,8 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@types/fluent-ffmpeg": "^2.1.24",
+    "fluent-ffmpeg": "^2.1.2",
     "gluegun": "latest"
   },
   "devDependencies": {
