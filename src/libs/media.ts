@@ -19,9 +19,9 @@ export class Video {
   public getRelativeFolder(folder: string) {
     return jetpack.dir(jetpack.path(this.videoFolder, folder))
   }
-  joinChunks() {
+  joinChunks(path: string) {
     // "-safe 0" - to accept file names with spaces.
-    return this.cmd.outputOption('-safe 0').outputOption('-codec copy')
+    return ffmpeg(path).outputOption('-safe 0').outputOption('-codec copy')
   }
   makeChunks(segmentTimeInSec: number) {
     const fileNamePrefix = 'video_'
@@ -51,16 +51,26 @@ export class Video {
 
       cmd
         .on('end', () => resolve(videoList))
-        .on('error', () => reject('error'))
+        .on('error', () => reject('videoChunks error'))
         .run()
     })
   }
-  async reverseVideo(outputPath?: FSJetpack) {
-    const ffconcatFilePath = await this.videoChunks(outputPath)
+  private reverseVideoChunks(ffconcatFilePath: string) {
     const reversed = reverseVideoOrder(ffconcatFilePath)
     const { dir, base } = path.parse(ffconcatFilePath)
     const newPath = jetpack.path(dir, `reversed-${base}`)
     jetpack.write(newPath, reversed)
+    return newPath
+  }
+  async reverseVideo(outputPath?: FSJetpack) {
+    const ffconcatFilePath = await this.videoChunks(outputPath)
+    const reverseVideoChunksPath = this.reverseVideoChunks(ffconcatFilePath)
+    const mergedVideo = jetpack.path(
+      path.parse(outputPath.path()).dir,
+      'merged-video.mp4',
+    )
+
+    this.joinChunks(reverseVideoChunksPath).output(mergedVideo).run()
   }
 
   frames(outputFolder?: FSJetpack) {
