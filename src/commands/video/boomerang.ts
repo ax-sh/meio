@@ -10,9 +10,10 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
     const videoPath = parameters.first
     const ffmpegCMD = media.video(videoPath)
     console.log('file size', ffmpegCMD.videoSize, 'mb')
-    const outputPath = filesystem.dir('outpust')
+    const outputPath = filesystem.dir('output')
     const cmd = ffmpegCMD.makeChunks(30).outputPath(outputPath)
-    cmd.run()
+    console.log(cmd._getArguments())
+    // cmd.run()
 
     // ffmpeg -pattern_type glob -i "*.jpg" -filter_complex "[0]reverse[r];[0][r]concat,loop=5:250,setpts=N/25/TB,scale=1920:1080" -vcodec mpeg4 -q:v 1 output_looped.mp4
     // const { raw, argv, ...args } = parameters

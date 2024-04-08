@@ -17,12 +17,11 @@ export class Video {
   public makeChunks(segmentTimeInSec: number) {
     const fileNamePrefix = 'video_'
     return {
-      outputPath: (outputPath: FSJetpack, useCurrentDir = false) => {
-        const filePattern = `${fileNamePrefix}%04d.mp4`
-        const output = useCurrentDir
+      outputPath: (outputPath?: FSJetpack) => {
+        const output = outputPath
           ? outputPath
           : jetpack.dir(jetpack.path(this.videoFolder, 'segments'))
-
+        const filePattern = `${fileNamePrefix}%04d.mp4`
         const videoList = output.path('broken-video-chunks-list.txt')
         return this.cmd
           .outputOption('-map 0')
