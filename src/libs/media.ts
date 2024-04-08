@@ -47,7 +47,7 @@ export class Video {
       : this.getRelativeFolder('frames')
 
     const path = outputPath.path('frame-%d.png')
-    console.log(path)
+    return this.cmd.outputOption(`-c:v png ${path}`)
   }
 }
 
