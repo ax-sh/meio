@@ -9,3 +9,5 @@ https://video.stackexchange.com/questions/12105/add-an-image-overlay-in-front-of
 https://video.stackexchange.com/questions/tagged/ffmpeg?tab=votes&page=2&pagesize=15
 
 https://video.stackexchange.com/questions/17738/how-to-use-ffmpeg-command-for-reverse-video
+
+https://stackoverflow.com/questions/76049932/how-do-i-reverse-a-video-in-ffmpeg
