@@ -20,18 +20,18 @@ export class Video {
       outputPath: (outputPath: FSJetpack, useCurrentDir = false) => {
         const filePattern = `${fileNamePrefix}%04d.mp4`
         const output = useCurrentDir
-          ? outputPath.path(filePattern)
-          : jetpack
-              .dir(jetpack.path(this.videoFolder, 'segments'))
-              .path(filePattern)
-        console.log(output)
+          ? outputPath
+          : jetpack.dir(jetpack.path(this.videoFolder, 'segments'))
+
+        const videoList = output.path('broken-video-chunks-list.txt')
         return this.cmd
           .outputOption('-map 0')
           .outputOption('-c copy')
           .outputOption('-f segment')
+          .outputOption(`-segment_list ${videoList}`)
           .outputOption(`-segment_time ${segmentTimeInSec}`)
           .outputOption('-y')
-          .output(output)
+          .output(output.path(filePattern))
       },
     }
   }
