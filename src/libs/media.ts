@@ -2,25 +2,31 @@ import * as ffmpeg from 'fluent-ffmpeg'
 import * as jetpack from 'fs-jetpack'
 import { KnownError } from '../types'
 import { FSJetpack, InspectResult } from 'fs-jetpack/types'
+import * as path from 'path'
+import { ParsedPath } from 'path'
 
 export class Video {
   private readonly videoPath: string
   public readonly videoSize: number
   private readonly videoFolder: string
   public readonly cmd: ffmpeg.FfmpegCommand
+  public readonly file: ParsedPath
   constructor(video: InspectResult) {
     this.videoFolder = jetpack.path(video.absolutePath, '..')
     this.videoSize = +(video.size / 1024 ** 2).toFixed(2)
     this.cmd = ffmpeg(video.absolutePath)
+    this.file = path.parse(video.absolutePath)
   }
-
+  public getRelativeFolder(folder: string) {
+    return jetpack.dir(jetpack.path(this.videoFolder, folder))
+  }
   public makeChunks(segmentTimeInSec: number) {
     const fileNamePrefix = 'video_'
     return {
       outputPath: (outputPath?: FSJetpack) => {
         const output = outputPath
           ? outputPath
-          : jetpack.dir(jetpack.path(this.videoFolder, 'segments'))
+          : this.getRelativeFolder('segments')
         const filePattern = `${fileNamePrefix}%04d.mp4`
         const videoList = output.path('broken-video-chunks-list.txt')
         return this.cmd
@@ -33,6 +39,15 @@ export class Video {
           .output(output.path(filePattern))
       },
     }
+  }
+
+  frames(outputFolder?: FSJetpack) {
+    const outputPath = outputFolder
+      ? outputFolder
+      : this.getRelativeFolder('frames')
+
+    const path = outputPath.path('frame-%d.png')
+    console.log(path)
   }
 }
 
