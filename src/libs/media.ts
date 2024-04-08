@@ -19,14 +19,18 @@ export class Video {
   public getRelativeFolder(folder: string) {
     return jetpack.dir(jetpack.path(this.videoFolder, folder))
   }
-  public makeChunks(segmentTimeInSec: number) {
+  joinChunks() {
+    // "-safe 0" - to accept file names with spaces.
+    return this.cmd.outputOption('-safe 0').outputOption('-codec copy')
+  }
+  makeChunks(segmentTimeInSec: number) {
     const fileNamePrefix = 'video_'
     return {
       outputPath: (outputPath?: FSJetpack) => {
         const output = outputPath
           ? outputPath
           : this.getRelativeFolder('segments')
-        const filePattern = `${fileNamePrefix}%04d.mp4`
+        const filePattern = `chunk-${fileNamePrefix}%04d.mp4`
         const videoList = output.path('broken-video-chunks-list.ffcat')
         const cmd = this.cmd
           .outputOption('-map 0')
@@ -52,9 +56,11 @@ export class Video {
     })
   }
   async reverseVideo(outputPath?: FSJetpack) {
-    const result = await this.videoChunks(outputPath)
-    const reversed = reverseVideoOrder(result)
-    console.log(reversed)
+    const ffconcatFilePath = await this.videoChunks(outputPath)
+    const reversed = reverseVideoOrder(ffconcatFilePath)
+    const { dir, base } = path.parse(ffconcatFilePath)
+    const newPath = jetpack.path(dir, `reversed-${base}`)
+    jetpack.write(newPath, reversed)
   }
 
   frames(outputFolder?: FSJetpack) {
