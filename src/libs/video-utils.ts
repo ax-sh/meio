@@ -1,6 +1,5 @@
 import { FfmpegCommand } from 'fluent-ffmpeg'
-
-import { FSJetpack } from 'fs-jetpack/types'
+import jetpack = require('fs-jetpack')
 
 export function FFMPEGLogger(ffmpegCMD: FfmpegCommand) {
   ffmpegCMD
@@ -20,4 +19,11 @@ export function FFMPEGLogger(ffmpegCMD: FfmpegCommand) {
     .on('close', () => {
       console.trace('onExit()')
     })
+}
+
+export function reverseVideoOrder(result: string) {
+  const [header, ...rest] = jetpack.read(result).split('\n')
+  const reversed = [header, ...rest.reverse()]
+  const text = reversed.join('\n')
+  return text
 }

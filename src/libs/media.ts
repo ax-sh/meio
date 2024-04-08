@@ -3,6 +3,7 @@ import * as jetpack from 'fs-jetpack'
 import * as path from 'path'
 import { KnownError } from '../types'
 import { FSJetpack, InspectResult } from 'fs-jetpack/types'
+import { reverseVideoOrder } from './video-utils'
 
 export class Video {
   public readonly videoSize: number
@@ -49,6 +50,11 @@ export class Video {
         .on('error', () => reject('error'))
         .run()
     })
+  }
+  async reverseVideo(outputPath?: FSJetpack) {
+    const result = await this.videoChunks(outputPath)
+    const reversed = reverseVideoOrder(result)
+    console.log(reversed)
   }
 
   frames(outputFolder?: FSJetpack) {
