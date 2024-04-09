@@ -17,7 +17,8 @@
     "test": "vitest run",
     "watch": "vitest",
     "snapupdate": "jest --updateSnapshot",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "release": "release-it"
   },
   "files": [
     "build",
@@ -44,6 +45,7 @@
     "husky": "^9.0.11",
     "prettier": "^3.2.5",
     "pretty-quick": "^4.0.0",
+    "release-it": "^17.1.1",
     "ts-node": "^10.9.1",
     "typescript": "~5.4.4",
     "vitest": "^1.4.0"
