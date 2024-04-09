@@ -17,7 +17,8 @@
     "test": "vitest run",
     "watch": "vitest",
     "snapupdate": "jest --updateSnapshot",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "release": "release-it"
   },
   "files": [
     "build",
