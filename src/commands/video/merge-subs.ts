@@ -5,7 +5,7 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
   name: 'merge-subs',
   alias: ['merge-subs'],
   run: async (toolbox) => {
-    const { filesystem, parameters } = toolbox
+    const { filesystem, parameters, print } = toolbox
     const folder = parameters.first
     if (!folder) throw new KnownError('Only dir supported')
     if (filesystem.isNotDirectory(folder))
@@ -32,7 +32,8 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
             outputPath,
           })
         } catch (e) {
-          throw new KnownError('Error merging subs to video')
+          print.error('Error merging subs to video')
+          throw e
         }
 
         console.log('DONE MERGE:', item)
