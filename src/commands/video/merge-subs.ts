@@ -25,11 +25,16 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
       const outputPath = filesystem.dir('merged__output').path(item.outputPath)
 
       if (filesystem.isFile(subtitlePath) && filesystem.isFile(videoPath)) {
-        await mergeSubs.mergeVideoWithSubtitle({
-          videoPath,
-          subtitlePath,
-          outputPath,
-        })
+        try {
+          await mergeSubs.mergeVideoWithSubtitle({
+            videoPath,
+            subtitlePath,
+            outputPath,
+          })
+        } catch (e) {
+          throw new KnownError('Error merging subs to video')
+        }
+
         console.log('DONE MERGE:', item)
       }
     }

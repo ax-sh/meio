@@ -3,7 +3,7 @@ import * as ffmpeg from 'fluent-ffmpeg'
 import { filesystem } from 'gluegun'
 
 const SUBTITLE_FILES = ['.srt', '.sub']
-const VIDEO_FILES = ['.mp4', 'mkv']
+const VIDEO_FILES = ['.mp4', '.mkv', '.ts']
 
 type CandidatesValue = { video: string; subtitle: string; outputPath: string }
 type CandidatesType = Record<string, CandidatesValue>
