@@ -1,6 +1,5 @@
 import { GluegunCommand } from 'gluegun'
 import { type ExtendedGluegunToolbox, KnownError } from '../../types'
-import { dir } from 'fs-jetpack'
 
 const command: GluegunCommand<ExtendedGluegunToolbox> = {
   name: 'merge-subs',
@@ -13,7 +12,7 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
       throw new KnownError('Only dir supported')
     const dir = filesystem.path(folder)
     const list = filesystem.list(dir)
-    console.log(dir)
+    console.log('Merging subs on dir:', dir)
 
     const mergeSubs = await import('../../libs/merge-subs.utils')
     const candidates = mergeSubs.findCandidates(list)
