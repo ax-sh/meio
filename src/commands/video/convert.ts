@@ -12,18 +12,10 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
       for (const i of dirFiles) {
         const info = path.basename(i)
         const ffmpegCMD = media.video(i)
-        console.log(ffmpegCMD.convertFormat('mp4'))
+        ffmpegCMD.convertFormat('mp4')
+        console.log('File size', ffmpegCMD.videoSize, 'mb')
       }
     }
-
-    //
-
-    // console.log('File size', ffmpegCMD.videoSize, 'mb')
-    // const outputPath = filesystem.dir('output')
-    // const rev = await ffmpegCMD.reverseVideo(outputPath)
-
-    // ffmpeg -display_rotation 90 -i input.mp4 -codec copy output.mp4
-    // console.log(rev)
   },
 }
 

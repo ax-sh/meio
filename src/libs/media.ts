@@ -96,7 +96,7 @@ export class Video {
 
   convertFormat(format: 'mp4') {
     const newFile = this.newFileExt('mp4')
-    console.log(this.file, newFile, format)
+    console.log(newFile, format)
     return this.cmd.outputOption(`-c copy`).output(newFile)
   }
 }
