@@ -10,11 +10,14 @@ export class Video {
   private readonly videoFolder: string
   public readonly cmd: ffmpeg.FfmpegCommand
   public readonly file: path.ParsedPath
+  public readonly fileName: string
+
   constructor(video: InspectResult) {
     this.videoFolder = jetpack.path(video.absolutePath, '..')
     this.videoSize = +(video.size / 1024 ** 2).toFixed(2)
     this.cmd = ffmpeg(video.absolutePath)
     this.file = path.parse(video.absolutePath)
+    this.fileName = this.file.name
   }
   public getRelativeFolder(folder: string) {
     return jetpack.dir(jetpack.path(this.videoFolder, folder))
@@ -81,6 +84,20 @@ export class Video {
     const path = outputPath.path('frame-%d.png')
 
     return this.cmd.outputOption(`-c:v png`).output(path)
+  }
+  newFileExt(ext: 'mp4') {
+    switch (ext) {
+      case 'mp4':
+        return `${this.fileName}.mp4`
+      default:
+        return
+    }
+  }
+
+  convertFormat(format: 'mp4') {
+    const newFile = this.newFileExt('mp4')
+    console.log(this.file, newFile, format)
+    return this.cmd.outputOption(`-c copy`).output(newFile)
   }
 }
 
