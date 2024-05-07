@@ -33,7 +33,8 @@ describe('Media class', () => {
 
     const o = await vi.importMock<typeof import('fs-jetpack')>('fs-jetpack')
     // console.log(o.default.exists)
-    vi.mocked(o.exists).mockReturnValue('directory')
+    // vi.mocked(o.exists).mockReturnValue('directory')
+    console.log(jetpack.exists)
     const v = new VideoInfo('v.ts')
     expect(v.videoPath).toBeDefined()
     expect(v.fileName).toBeDefined()
