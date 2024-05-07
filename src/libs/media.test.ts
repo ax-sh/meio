@@ -33,7 +33,7 @@ describe('Media class', () => {
     expect(v.videoPath).toBeDefined()
     expect(v.fileName).toBeDefined()
     expect(v.extension).toBeDefined()
-    expect(v.dir).toBeDefined()
+    expect(v.videoDir).toBeDefined()
     expect(v.size()).toBe('10 kB')
   })
 })

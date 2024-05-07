@@ -11,7 +11,7 @@ export class VideoInfo implements IVideoInfo {
   public readonly videoPath: string
   public readonly fileName: string
   public readonly extension: string
-  public readonly dir: string
+  public readonly videoDir: string
   public readonly file: path.ParsedPath
 
   constructor(videoPath: string) {
@@ -19,7 +19,7 @@ export class VideoInfo implements IVideoInfo {
     const videoPathParsed = path.parse(videoPath)
     this.fileName = videoPathParsed.base
     this.extension = videoPathParsed.ext
-    this.dir = videoPathParsed.dir
+    this.videoDir = videoPathParsed.dir
   }
   isFile() {
     const result = jetpack.exists(this.videoPath)
