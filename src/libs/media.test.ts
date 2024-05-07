@@ -2,38 +2,45 @@ import { VideoInfo } from './video-info'
 import { expect, vi } from 'vitest'
 import jetpack = require('fs-jetpack')
 
-vi.mock('fs-jetpack', () => ({
-  __esModule: true,
-  default: { exists: () => 1 },
-}))
+// vi.mock('fs-jetpack')
+
+vi.mock('fs-jetpack', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('fs-jetpack')>()
+  // ...(await vi.importActual('fs-jetpack')),
+  return {
+    ...mod,
+    __esModule: true,
+    exists: vi.fn(() => 'file'),
+    inspect: vi.fn(() => ({
+      size: 10000,
+    })),
+  }
+})
+
+// const mockFS: vi.Mocked<typeof jetpack> = jetpack
 
 describe('Media class', () => {
-  test('your test case', async () => {
-    const o = await vi.importMock<typeof import('fs-jetpack')>('fs-jetpack')
-    expect(o.default.exists('1')).toBe(1)
-  })
   it('should pass', async () => {
+    console.log(jetpack.exists)
     expect(1).toBe(1)
   })
   it('should mock jetpack', async () => {
-    await vi.importMock<typeof import('fs-jetpack')>('fs-jetpack')
-    // vi.mock('fs-jetpack', async (importOriginal) => {
-    //   const mod = await importOriginal<typeof import('fs-jetpack')>()
-    //   return {
-    //     ...mod,
-    //     // replace some exports
-    //     exists: mockedMethod,
-    //   }
-    // })
-    const exists = jetpack.exists('/path/to/file')
-    expect(exists).toBe('34')
+    const mockedJetpack =
+      await vi.importMock<typeof import('fs-jetpack')>('fs-jetpack')
+    const exists = mockedJetpack.exists('/path/to/file')
+    expect(exists).toBe(false)
   })
-  it('should initiate VideoInfo', () => {
+  it('should initiate VideoInfo', async () => {
+    // vi.mocked(jetpack.exists).mockReturnValue('mockData')
+
+    const o = await vi.importMock<typeof import('fs-jetpack')>('fs-jetpack')
+    // console.log(o.default.exists)
+    vi.mocked(o.exists).mockReturnValue('directory')
     const v = new VideoInfo('v.ts')
     expect(v.videoPath).toBeDefined()
     expect(v.fileName).toBeDefined()
     expect(v.extension).toBeDefined()
     expect(v.dir).toBeDefined()
-    console.log(v.size())
+    expect(v.size()).toBe('10 kB')
   })
 })
