@@ -1,6 +1,6 @@
 import { VideoInfo } from './video-info'
 import { expect, vi } from 'vitest'
-import jetpack = require('fs-jetpack')
+import * as jetpack from 'fs-jetpack'
 
 vi.mock('fs-jetpack', async (importOriginal) => {
   const mod = await importOriginal<typeof import('fs-jetpack')>()
@@ -19,7 +19,7 @@ vi.mock('fs-jetpack', async (importOriginal) => {
 
 describe('Media class', () => {
   it('should pass', async () => {
-    console.log(jetpack.exists)
+    console.log(jetpack.exists('h'))
     expect(1).toBe(1)
   })
   it('should mock jetpack', async () => {
@@ -29,12 +29,6 @@ describe('Media class', () => {
     expect(exists).toBe(false)
   })
   it('should initiate VideoInfo', async () => {
-    // vi.mocked(jetpack.exists).mockReturnValue('mockData')
-
-    const o = await vi.importMock<typeof import('fs-jetpack')>('fs-jetpack')
-    // console.log(o.default.exists)
-    // vi.mocked(o.exists).mockReturnValue('directory')
-    console.log(jetpack.exists)
     const v = new VideoInfo('v.ts')
     expect(v.videoPath).toBeDefined()
     expect(v.fileName).toBeDefined()

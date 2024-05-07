@@ -28,7 +28,3 @@ export function reverseVideoOrder(result: string) {
   const text = reversed.join('\n')
   return text
 }
-
-export function jetpackExists(outputPath: string) {
-  return jetpack.exists(outputPath)
-}
