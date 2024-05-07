@@ -2,8 +2,6 @@ import { VideoInfo } from './video-info'
 import { expect, vi } from 'vitest'
 import jetpack = require('fs-jetpack')
 
-// vi.mock('fs-jetpack')
-
 vi.mock('fs-jetpack', async (importOriginal) => {
   const mod = await importOriginal<typeof import('fs-jetpack')>()
   // ...(await vi.importActual('fs-jetpack')),
