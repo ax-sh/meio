@@ -4,7 +4,7 @@ const command: GluegunCommand = {
   name: 'rmbg',
   run: async (toolbox) => {
     const { print, system, parameters } = toolbox
-    const { parseFilePath } = await import('../lib/parse-file-path')
+    const { parseFilePath } = await import('../libs/parse-file-path')
     const inputFile = parseFilePath(parameters.first)
     const outputFile = inputFile.newFilePath('removed-bg')
 
