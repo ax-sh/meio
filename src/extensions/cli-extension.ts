@@ -9,7 +9,8 @@ module.exports = async (toolbox: ExtendedGluegunToolbox) => {
 
   toolbox.ffmpeg = await import('fluent-ffmpeg')
   toolbox.media = await import('../libs/media')
-
+  const { makeOutputPath } = await import('../libs/make-output-path')
+  toolbox.makeOutputPath = makeOutputPath
   // enable this if you want to read configuration in from
   // the current folder's package.json (in a "meio" property),
   // meio.config.json, etc.
