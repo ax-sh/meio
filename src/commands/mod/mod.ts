@@ -10,21 +10,24 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
     const input = parameters.first
     if (!input) throw new KnownError('filePath is empty')
     const { makeOutputPath } = await import('../../libs/make-output-path')
+    const { runFFMpegCmd } = await import('../../libs/FFMpeg-utils')
     const { outputPath, inputPath } = makeOutputPath(input)
     const timer = toolbox.system.startTimer()
     // const cmd = `ffmpeg -hide_banner -hwaccel cuda -i "${inputPath}" -c:v libx265 -preset fast "${outputPath}"`
-    // // const cmd = ffmpeg(inputPath)
-    // //   .outputOption('-hide_banner')
-    // //   .outputOption('-hwaccel cuda')
-    // //   .outputOption('-c:v libx265')
-    // //   .outputOption(`-preset fast`)
-    // //   .output(outputPath)
-    // //
-    // // // cmd
-    // // //   .on('error', (err) => reject({ error: err, outputPath, videoPath }))
-    // // //   .on('end', () => resolve({ videoPath, subtitlePath }))
-    // // cmd.run()
-    //
+    const cmd = ffmpeg(inputPath)
+      .inputOption('-hide_banner')
+      .inputOption('-hwaccel cuda')
+      .outputOption('-c:v libx265')
+      .outputOption(`-preset fast`)
+      .output(outputPath)
+
+    await runFFMpegCmd(cmd, (progress) => {
+      const complete = +progress.percent
+      const percent = complete * 100
+
+      console.log(percent.toFixed(2), '%', outputPath)
+    })
+
     console.log(`That just took ${timer()} ms.`)
     console.log({ outputPath, inputPath })
   },
