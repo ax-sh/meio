@@ -19,7 +19,8 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
       .inputOption('-hwaccel cuda')
       .outputOption('-c:v copy')
       .outputOption(`-filter:v "scale=width=1920:height=-2"`)
-      .output(`"${outputPath}"`)
+      .output(`"${outputPath.trim()}"`)
+    console.log(ffmpeg.toString())
     await runFFMpegCmd(cmd, (progress) => {
       console.log(progress)
     })
