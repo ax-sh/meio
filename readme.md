@@ -20,6 +20,6 @@ $ npm run build
 $ npm publish
 ```
 
-# License
-
-MIT - see LICENSE
+#### todo
+https://unix.stackexchange.com/questions/1670/how-can-i-use-ffmpeg-to-split-mpeg-video-into-10-minute-chunks
+https://github.com/redotvideo/revideo
