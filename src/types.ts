@@ -7,4 +7,5 @@ export class KnownError extends Error {}
 export interface ExtendedGluegunToolbox extends GluegunToolbox {
   ffmpeg: typeof Ffmpeg
   media: typeof Media
+  makeOutputPath: any
 }
