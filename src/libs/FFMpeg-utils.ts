@@ -7,7 +7,8 @@ export function runFFMpegCmd(
   return new Promise((resolve, reject) => {
     cmd
       .on('start', (commandLine) => {
-        console.log('Spawned Ffmpeg with command: ' + commandLine)
+        console.log('[Spawned Ffmpeg with command: ]' + commandLine)
+        console.log(' ')
       })
       .on('progress', progress)
       .on('end', () => resolve({ message: 'done' }))

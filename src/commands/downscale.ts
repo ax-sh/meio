@@ -8,7 +8,7 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
     const { print, parameters, filesystem, system } = toolbox
     const input = parameters.first
     const { makeOutputPath } = await import('../libs/make-output-path')
-    const { outputPath, inputPath } = makeOutputPath(input)
+    const { outputPath, inputPath } = makeOutputPath({ filePath: input })
     const timer = toolbox.system.startTimer()
     const cmd = `ffmpeg -hwaccel cuda -i "${inputPath}" -c:v libx265 -preset fast "${outputPath}"`
     print.success(cmd)

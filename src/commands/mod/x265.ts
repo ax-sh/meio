@@ -8,7 +8,7 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
     const input = parameters.first
     if (!input) throw new KnownError('filePath is empty')
     const { makeOutputPath } = await import('../../libs/make-output-path')
-    const { outputPath, inputPath } = makeOutputPath(input)
+    const { outputPath, inputPath } = makeOutputPath({ filePath: input })
     const timer = toolbox.system.startTimer()
     const cmd = `ffmpeg -hide_banner -hwaccel cuda -i "${inputPath}" -c:v libx265 -preset fast "${outputPath}"`
 

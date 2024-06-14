@@ -11,8 +11,12 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
     if (!input) throw new KnownError('filePath is empty')
     const { makeOutputPath } = await import('../../libs/make-output-path')
     const { runFFMpegCmd } = await import('../../libs/FFMpeg-utils')
-    const { outputPath, inputPath } = makeOutputPath(input)
+    const { outputPath, inputPath } = makeOutputPath({
+      filePath: input,
+      mode: 'relative',
+    })
     const timer = toolbox.system.startTimer()
+
     // const cmd = `ffmpeg -hide_banner -hwaccel cuda -i "${inputPath}" -c:v libx265 -preset fast "${outputPath}"`
     const cmd = ffmpeg(inputPath)
       .inputOption('-hide_banner')
@@ -21,13 +25,16 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
       .outputOption(`-preset fast`)
       .output(outputPath)
 
+    const spinner = print.spin('making h265 encode using cuda')
     await runFFMpegCmd(cmd, (progress) => {
       const complete = +progress.percent
       const percent = complete * 100
+      const humanPercent = `${percent.toFixed(2)}%`
 
-      console.log(percent.toFixed(2), '%', outputPath)
+      spinner.start(`${humanPercent} => ${outputPath}`)
     })
 
+    spinner.succeed('DONE')
     console.log(`That just took ${timer()} ms.`)
     console.log({ outputPath, inputPath })
   },

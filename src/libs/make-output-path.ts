@@ -8,7 +8,18 @@ type PathOutput = {
   outputPath: string
   name: string
 }
-export function makeOutputPath(filePath: string, prefix = '.out'): PathOutput {
+
+type OutputPathOptions = {
+  filePath: string
+  prefix?: string
+  mode?: 'relative' | 'none'
+}
+
+export function makeOutputPath({
+  filePath,
+  prefix = '.out',
+  mode = 'none',
+}: OutputPathOptions): PathOutput {
   const videoPath = jetpack.path(filePath)
   const isFile = jetpack.exists(videoPath) == 'file'
   if (!isFile) throw new KnownError('Not a File')
@@ -18,7 +29,8 @@ export function makeOutputPath(filePath: string, prefix = '.out'): PathOutput {
   const { name, ext, dir } = path.parse(inspect.absolutePath)
   const outputName = [name, ext].join(prefix)
 
-  const outputPath = jetpack.path(dir, outputName)
+  const outputPath =
+    mode === 'relative' ? outputName : jetpack.path(dir, outputName)
   const inputPath = inspect.absolutePath
   return { outputPath, outputName, inputPath, name }
 }
