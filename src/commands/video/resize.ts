@@ -7,22 +7,36 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
   name: 'resize',
   alias: ['scale'],
   run: async (toolbox) => {
-    const filePath = toolbox.parameters.first.trim()
+    const { parameters, system, print } = toolbox
+    const filePath = parameters.first.trim()
+    const width = Number(parameters.second) || 1920
     const { inputPath, outputPath } = toolbox.makeOutputPath({
       filePath,
     })
+    const spinner = print.spin(`Resizing with height ${width}`)
+
+    // const cmd = `ffmpeg -hide_banner -i "${inputPath}" -c:v libx265 -vtag hvc1 -vf scale=1920:1080 -crf 20 -c:a copy -filter:v "scale=width=${width}:height=-2" "${outputPath}"`
+    // const out = await system.run(cmd)
+    //
+    // spinner.succeed()
+
+    // console.log(out)
 
     const cmd = ffmpeg(inputPath)
-      .outputOption('-safe 0')
-      .outputOption('-codec copy')
-      .inputOption('-hide_banner')
+      .videoCodec('libx265')
       .inputOption('-hwaccel cuda')
-      .outputOption('-c:v copy')
-      .outputOption(`-filter:v "scale=width=1920:height=-2"`)
-      .output(`"${outputPath.trim()}"`)
-    console.log(ffmpeg.toString())
+      .outputOption('-safe 0')
+      .outputOptions(['-vtag hvc1', '-crf 20'])
+      .outputOption('-y')
+      .audioCodec('copy')
+      .videoFilter(`scale=width=${width}:height=-2`)
+
+      .save(outputPath)
+    spinner.succeed()
+    spinner.stop()
+
     await runFFMpegCmd(cmd, (progress) => {
-      console.log(progress)
+      console.table(progress)
     })
   },
 }
