@@ -3,12 +3,13 @@ import { ExtendedGluegunToolbox } from '../types'
 
 const command: GluegunCommand<ExtendedGluegunToolbox> = {
   name: 'downscale',
-
+  alias: ['ds'],
   run: async (toolbox) => {
-    const { print, parameters } = toolbox
+    const { print, parameters, system } = toolbox
     const { raw, argv, ...args } = parameters
+    const input = parameters.first
 
-    console.log(args, toolbox.ffmpeg)
+    console.log(args, input)
   },
 }
 
