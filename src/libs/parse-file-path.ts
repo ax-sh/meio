@@ -1,21 +1,22 @@
-import { filesystem } from 'gluegun';
-import * as path from 'path';
+import { filesystem } from 'gluegun'
+import * as path from 'path'
 
-import { KnownError } from '../types';
+import { KnownError } from '../types'
 
 export function parseFilePath(filePath: string) {
-  if (filesystem.isNotFile(filePath)) throw new KnownError('File not found');
-  const absoluteFilePath = filesystem.path(filePath);
+  if (filesystem.isNotFile(filePath)) throw new KnownError('File not found')
+  const absoluteFilePath = filesystem.path(filePath)
   const {
     dir: relativeDir,
     ext: fileExt,
     name: fileName,
-    base: fullName
-  } = path.parse(absoluteFilePath);
-  const { size, type } = filesystem.inspect(filePath);
-  const relativeDirJoin = (...args: string[]) => filesystem.path(relativeDir, ...args);
+    base: fullName,
+  } = path.parse(absoluteFilePath)
+  const { size, type } = filesystem.inspect(filePath)
+  const relativeDirJoin = (...args: string[]) =>
+    filesystem.path(relativeDir, ...args)
   const newFilePath = (suffix: string, ext = fileExt) =>
-    relativeDirJoin(`${fileName}---${suffix}${ext}`);
+    relativeDirJoin(`${fileName}---${suffix}${ext}`)
   return {
     path: absoluteFilePath,
     relativeDir,
@@ -25,6 +26,6 @@ export function parseFilePath(filePath: string) {
     size,
     type,
     fileExt,
-    fullName
-  };
+    fullName,
+  }
 }
