@@ -6,8 +6,8 @@ const command: GluegunCommand<ExtendedGluegunToolbox> = {
   run: async (toolbox) => {
     const { print, parameters } = toolbox
     const { raw, argv, ...args } = parameters
-    print.info('Welcome to your meio CLI')
-    console.log(args, toolbox.ffmpeg)
+    print.printCommands(toolbox)
+    // console.log(args, toolbox.ffmpeg)
   },
 }
 
