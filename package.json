@@ -29,6 +29,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "editly": "^0.14.2",
     "fluent-ffmpeg": "^2.1.2",
     "fs-jetpack": "^5.1.0",
     "gluegun": "latest",
