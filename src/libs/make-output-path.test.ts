@@ -30,12 +30,12 @@ describe.only('make-output-path', () => {
   //   )
   // })
   it('should take input path', () => {
-    const o = makeOutputPath(filePath)
+    const o = makeOutputPath({ filePath: filePath })
     expect(o.outputPath).toBe(
       jetpack.path('D:/Archives/CLOxDMIx3DMagic_Webinar.out.mp4'),
     )
   })
   it.fails('should raise error on file not found', () => {
-    makeOutputPath('m.mp4')
+    makeOutputPath({ filePath: 'm.mp4' })
   })
 })

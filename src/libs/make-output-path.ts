@@ -2,14 +2,14 @@ import * as jetpack from 'fs-jetpack'
 import { KnownError } from '../types'
 import * as path from 'path'
 
-type PathOutput = {
+export type PathOutput = {
   outputName: string
   inputPath: string
   outputPath: string
   name: string
 }
 
-type OutputPathOptions = {
+export type OutputPathOptions = {
   filePath: string
   prefix?: string
   mode?: 'relative' | 'none'
